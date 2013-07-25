@@ -9,8 +9,10 @@
   <meta name="author" content="流兮">
 
   
-  <meta name="description" content="测试中文 中文中文 测试中文 测试测试
-">
+  <meta name="description" content="记录一下自己部署Octopress的经历吧。 目录 创建github repository
+安装Octopress
+部署到github
+发布Post和换电脑 创建github repository github的pages服务包括2种：User/Orgonization和Project。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +68,178 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/25/zai-githubshang-bu-shu-octopress/">在github上部署Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-25T18:19:00+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>记录一下自己部署Octopress的经历吧。</p>
+
+<h2>目录</h2>
+
+<ul>
+<li><a href="#cj">创建github repository</a></li>
+<li><a href="#az">安装Octopress</a></li>
+<li><a href="#bs">部署到github</a></li>
+<li><a href="#post">发布Post和换电脑</a></li>
+</ul>
+
+
+<p><a name="cj" id="cj"></a></p>
+
+<h2>创建github repository</h2>
+
+<p>github的pages服务包括2种：User/Orgonization和Project。我做的是前者。</p>
+
+<p>要创建一个名为“user.github.io”的repo，这样能保证可以通过<code>http://user.github.io</code>来访问页面。</p>
+
+<p><a name="az" id="az"></a></p>
+
+<h2>安装Octopress</h2>
+
+<p>首先要保证Git和ruby正确安装。我在尝试Windows上安装时，用了ruby2.0，最后不能用，也不知道是不是不支持ruby2.0。反正官方的文档用的是1.9.3。</p>
+
+<p>现在引用官方的文档：</p>
+
+<p>先是下载octopress：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress    # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+</span><span class='line'>ruby --version  # Should report Ruby 1.9.3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后安装依赖：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后安装默认的主题：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>到这里，Octopress就安装完成了。在安装过程中，<code>gem install bundler</code> 和 <code>bundle install</code> 会十分耗时。需要做一点点修改来解决这个问题。</p>
+
+<h3>修改gem源</h3>
+
+<p>用 <code>gem sources -l</code> 看当前的源，默认是 <code>https://rubygem.org/</code>。</p>
+
+<p>可以用 <code>gem sources --remove https://rubygem.org/</code> 把它删掉。然后用 <code>gem sources -a http://ruby.taobao.org/</code> 添加新源。看域名就知道是淘宝的，看来淘宝对中国的开源事业还是做了一定贡献的。</p>
+
+<h3>修改Gemfile</h3>
+
+<p>打开<code>octopress/Gemfile</code>，把第一行改成 <code>source "http://ruby.taobao.org"</code></p>
+
+<p>速度问题就此解决。</p>
+
+<p><a name="bs" id="bs"></a></p>
+
+<h2>部署到github</h2>
+
+<p>直接用下面命令setup</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个命令会让你设置repo的路径，也就是<code>https://github.io/user/user.github.io</code>。至于作用，我就不翻译了，反正什么都给配好了。原文在<a href="http://octopress.org/docs/deploying/github/">这里</a>。</p>
+
+<p><a name="fb" id="fb"></a>然后用下面的命令直接就发布了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>rake deploy</code> 会把编译好的最终结果提交到repo的master分支。</p>
+
+<p><a name="bc" id="bc"></a>为了保存源码，还需要做点事情：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
+</span><span class='line'>git commit -m 'your message'
+</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就把源码提交到了repo的source分支。</p>
+
+<p><a name="post" id="post"></a></p>
+
+<h2>发布Post和换电脑</h2>
+
+<p>用下面命令创建一篇新的Post：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里<code>title</code>随便写(如果<code>title</code>里有中文，它还会自动转成拼音做文件名，真强)。Octopress会自动创建一个文件，并给出路径。只要用任何文本编辑器打开这个文件，根据MD语法写Post就行了。</p>
+
+<p>写完后，需要再走一遍<a href="#fb">发布</a>流程。同样，需要再次<a href="#bc">保存源码</a>。</p>
+
+<p>换了电脑后，首先要clone<code>user.github.io</code>这个repo。但是这样是无法deploy的。也没在官方文档里找到什么好办法。幸好在网上搜到了一种比较暴力的方法：</p>
+
+<p>首先当然是要把当前分支切换到<code>source</code>。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout source</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后创建<code>_deploy</code>目录，如果已经有了，就先删除，然后再创建。</p>
+
+<p>进入<code>_deploy</code>目录，把master分支pull下来</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git init
+</span><span class='line'>git remote add origin git@github.com:user/user.github.io.git
+</span><span class='line'>git pull origin master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样一来就可以写新Post并且发布了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -228,6 +402,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/25/zai-githubshang-bu-shu-octopress/">在github上部署Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/25/zhong-wen-ce-shi/">中文测试</a>
