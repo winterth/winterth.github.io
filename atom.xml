@@ -4,7 +4,7 @@
   <title><![CDATA[思路]]></title>
   <link href="http://winterth.github.io/atom.xml" rel="self"/>
   <link href="http://winterth.github.io/"/>
-  <updated>2013-07-25T14:40:24+08:00</updated>
+  <updated>2013-07-25T15:43:01+08:00</updated>
   <id>http://winterth.github.io/</id>
   <author>
     <name><![CDATA[流兮]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[中文测试]]></title>
+    <link href="http://winterth.github.io/blog/2013/07/25/zhong-wen-ce-shi/"/>
+    <updated>2013-07-25T15:42:00+08:00</updated>
+    <id>http://winterth.github.io/blog/2013/07/25/zhong-wen-ce-shi</id>
+    <content type="html"><![CDATA[<h1>测试中文</h1>
+
+<p>中文中文</p>
+
+<h2>测试中文</h2>
+
+<p>测试测试</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Third test]]></title>
