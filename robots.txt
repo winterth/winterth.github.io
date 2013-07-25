@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://winterth.github.io/sitemap.xml 
